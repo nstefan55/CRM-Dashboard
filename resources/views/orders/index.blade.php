@@ -20,7 +20,7 @@
                         <th>Total Amount</th>
                         <th>Created At</th>
                         <th>Updated At</th>
-
+                        <th>Associated Products</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +31,27 @@
                         <td>{{ $order->total_amount }}</td>
                         <td>{{ $order->created_at }}</td>
                         <td>{{ $order->updated_at }}</td>
+                        <td>
+                            @if ($order->products->isEmpty())
+                            <span>No products associated</span>
+                            @else
+                            <ul class="list-group">
+                                @foreach ($order->products as $product)
+                                <li class="list-group-item">
+                                    <div>
+                                        <strong>Product Name:</strong> {{ $product->name ?? 'N/A' }}
+                                    </div>
+                                    <div>
+                                        <strong>Quantity:</strong> {{ $product->pivot->quantity ?? 'N/A' }}
+                                    </div>
+                                    <div>
+                                        <strong>Status:</strong> {{ $product->pivot->status ?? 'No Status' }}
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

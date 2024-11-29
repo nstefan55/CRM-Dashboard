@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->decimal('unit_price', 10, 2);
             $table->dateTime('order_placed_at')->default(now());
+            $table->string('status', 20);
 
             $table->primary(['order_id', 'product_id']);
         });
