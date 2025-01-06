@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CustomerController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +25,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -31,8 +33,18 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:50',
+            'email' => 'required|string|email|max:255|unique:customers',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        Customer::create($validatedData);
+
+        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
     }
+
 
     /**
      * Display the specified resource.

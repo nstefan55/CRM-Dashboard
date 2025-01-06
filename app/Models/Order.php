@@ -10,7 +10,7 @@ class Order extends Model
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
-
+    protected $fillable = ['order_date', 'total_amount'];
 
     public function products()
     {

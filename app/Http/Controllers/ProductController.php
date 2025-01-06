@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Order;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -15,6 +16,13 @@ class ProductController extends Controller
     {
         $products = Product::with('orders')->get();
 
+        foreach ($products as $product) {
+            foreach ($product->orders as $order) {
+                $quantity = $order->pivot->quantity;
+                $status = $order->pivot->status;
+            }
+        }
+
         return view('products.index', compact('products'));
     }
 
@@ -23,7 +31,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $orders = Order::all();
+        return view('products.create', compact('orders'));
     }
 
     /**
@@ -31,7 +40,17 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0|max:99999999.99',
+
+        ]);
+
+        Product::create($validatedData);
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
     /**

@@ -9,4 +9,6 @@ class Activity extends Model
 {
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
+
+    protected $fillable = ['activity_type', 'description'];
 }
