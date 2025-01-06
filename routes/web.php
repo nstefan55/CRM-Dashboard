@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ActivityController;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });

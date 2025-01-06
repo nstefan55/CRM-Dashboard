@@ -18,6 +18,7 @@
                         <th>ID</th>
                         <th>Order Date</th>
                         <th>Total Amount</th>
+                        <th>Customer ID</th>
                         <th>Created At</th>
                         <th>Updated At</th>
                         <th>Associated Products</th>
@@ -29,6 +30,7 @@
                         <td>{{ $order->id }}</td>
                         <td>{{ $order->order_date }}</td>
                         <td>{{ $order->total_amount }}</td>
+                        <td>{{ $order->customer->id ?? 'N/A' }}</td>
                         <td>{{ $order->created_at }}</td>
                         <td>{{ $order->updated_at }}</td>
                         <td>
