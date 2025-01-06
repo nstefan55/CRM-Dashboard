@@ -23,7 +23,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        //
+        return view('activities.create');
     }
 
     /**
@@ -31,7 +31,15 @@ class ActivityController extends Controller
      */
     public function store(StoreActivityRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'activity_type' => 'required|string|max:255',
+            'description' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        Activity::create($validatedData);
+
+        return redirect()->route('activities.index')->with('success', 'Activity created successfully.');
     }
 
     /**
